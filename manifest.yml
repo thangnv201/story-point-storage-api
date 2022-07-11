@@ -1,0 +1,23 @@
+modules:
+  jira:globalPage:
+    - key: story-point-storage-api-hello-world
+      function: main
+      title: story-point-storage-api
+  trigger:
+    - key: issue-creation-trigger
+      events:
+        - avi:jira:created:issue
+        - avi:jira:updated:issue
+      function: issue-trigger-func
+  function:
+    - key: main
+      handler: index.run
+    - key: issue-trigger-func
+      handler: jira.issueCreationTrigger
+app:
+  id: ari:cloud:ecosystem::app/a34b33f8-f5a1-4965-942f-6c7d3a49d5e5
+permissions:
+  scopes:
+    - storage:app
+    - read:jira-work
+
