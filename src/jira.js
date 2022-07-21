@@ -1,4 +1,4 @@
-import { storage } from '@forge/api';
+import { storage,properties  } from '@forge/api';
 
 export async function issueCreationTrigger(event, context) {
     if (event.changelog.items === undefined) {
@@ -14,6 +14,10 @@ export async function issueCreationTrigger(event, context) {
     }
     console.log(body);
     storage.set("issue-key-"+body.issueKey,body);
+    
     console.log(await storage.get("issue-key-"+body.issueKey));
+    await properties.onJiraIssue(event.issue.key).set('testing',"HEL-7"+ body.storyPoint);
+    let data = await properties.onJiraIssue(event.issue.key).get('testing');
+    console.log(data);
     return true;
 }
